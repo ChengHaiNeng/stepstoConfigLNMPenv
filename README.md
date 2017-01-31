@@ -1,10 +1,10 @@
 # stepstoConfigLNMPenv
 Step to Config Linux+Nginx+Mysql+PHP environment
-示例: yum 安装 gcc 编译环境,为编译 lnmp 做准备
+# 示例: yum 安装 gcc 编译环境,为编译 lnmp 做准备
 yum -y install gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel
 freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibcdevel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curldevel e2fsprogs e2fsprogs-devel krb5 krb5-devel libidn libidn-devel openssl
 openssl-devel openldap openldap-devel nss_ldap openldap-clients openldapservers gd gd2 gd-devel gd2-devel perl-CPAN pcre-devel
-第16章、 ⼿动编译安装软件*
+# ⼿动编译安装软件*
 软件编译就是把 源代码(如 c,c++)编译成⼆进制的过程
 注意要下载源代码
 以 memcached 为例,来编译,到 memcached.org 下载源码.
@@ -39,7 +39,7 @@ netstat -tupln | grep memcached
 kill -9 进程号 / pkill 进程名
 第17章、 编译安装LNMP环境LNMP环境：
 linux+Nginx+MySQL+PHP
-17.1 编译nginx
+# 编译nginx
 1: 下载
 http://nginx.org/en/download.html
 选择 stable 版本下载,最新稳定版
@@ -71,7 +71,7 @@ service iptables stop
 centos7关闭防⽕墙:
 systemctl stop firewalld.service
 再次连接,出现以下界⾯,则安装成功
-17.2 编译安装PHP
+# 编译安装PHP
 安装PHP⽤到的系统组件：
 yum install gd zlib zlib-devel openssl openssl-devel libxml2 libxml2-devel
 libjpeg libjpeg-devel libpng libpng-devel
@@ -91,12 +91,12 @@ cd /usr/local/php
 cp ./etc/php-fpm.conf.default ./etc/php-fpm.conf
 cp /usr/local/src/php-5.5.13/php.ini-development /etc/php/php.ini
 ./sbin/php-fpm
-整合 nginx 和 PHP
+# 整合 nginx 和 PHP
 Vim /path/to/nginx.conf
 让 nginx 的最新配置⽂件⽣效
 ./sbin/nginx -s reload
 再次请求 xx.php
-17.3 安装MySQL
+# 安装MySQL
 编译安装 *下载MySQL程序包并解压
 官⽹： http://dev.mysql.com/downloads/mysql/
 sudo wget http://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.17.tar.gz
