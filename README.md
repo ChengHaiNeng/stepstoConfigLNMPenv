@@ -77,15 +77,16 @@ yum install gd zlib zlib-devel openssl openssl-devel libxml2 libxml2-devel
 libjpeg libjpeg-devel libpng libpng-devel
 下载并解压， 切换到相应⽬录
 设置编译参数：
-./configure --prefix=/usr/local/php
---with-config-file-path=/etc/php
---with-gd
---enable-gd-native-ttf
---enable-gd-jis-conv
---enable-mysqlnd
---with-mysql=mysqlnd
---with-pdo-mysql=mysqlnd--with-openssl
---enable-mbstring
+./configure --prefix=/usr/local/php 
+--with-config-file-path=/etc/php 
+--with-gd 
+--enable-gd-native-ttf 
+--enable-gd-jis-conv 
+--enable-mysqlnd 
+--with-mysql=mysqlnd 
+--with-pdo-mysql=mysqlnd 
+--with-openssl 
+--enable-mbstring 
 --enable-fpm
 cd /usr/local/php
 cp ./etc/php-fpm.conf.default ./etc/php-fpm.conf
@@ -99,7 +100,7 @@ Vim /path/to/nginx.conf
 # 安装MySQL
 编译安装 *下载MySQL程序包并解压
 官⽹： http://dev.mysql.com/downloads/mysql/
-sudo wget http://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.17.tar.gz
+sudo wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.17.tar.gz
 tar -zxvf mysql-5.7.17.tar.gz
 创建⽤户及组
 sudo groupadd mysql
