@@ -37,7 +37,7 @@ memcached -d -u root
 netstat -tupln | grep memcached
 杀死
 kill -9 进程号 / pkill 进程名
-第17章、 编译安装LNMP环境LNMP环境：
+编译安装LNMP环境LNMP环境：
 linux+Nginx+MySQL+PHP
 # 编译nginx
 1: 下载
