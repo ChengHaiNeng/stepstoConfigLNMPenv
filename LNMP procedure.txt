@@ -112,86 +112,54 @@ sudo chown -R mysql:mysql /usr/local/mysql
 cd mysql-5.6.26/
 存在这个?件就删除
 rm CMakeCache.txt
+yum安装cmake命令
+yum intsall cmake
+安装boost c++组件
+wget http://sourceforge.net/projects/boost/files/boost/1.59.0/boost_1_59_0.tar.gz
+tar -zxf boost_1_59_0.tar.gz
+mv boost_1_59_0 /usr/local/boost
+存在这个?件就删除
+rm CMakeCache.txt
+
 cmake编译
-cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql -
-DMYSQL_DATADIR=/usr/local/mysql/data -DMYSQL_UNIX_ADDR=/tmp/mysql.sock -
-DDEFAULT_CHARSET=utf8 -DDEFAULT_COLLATION=utf8_general_ci -DWITH_DEBUG=0
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql -DMYSQL_DATADIR=/usr/local/mysql/data -DMYSQL_UNIX_ADDR=/tmp/mysql.sock -DDEFAULT_CHARSET=utf8 -DDEFAULT_COLLATION=utf8_general_ci -DWITH_DEBUG=0 -DDOWNLOAD_BOOST=1 -DWITH_BOOST=/usr/local/boost
 安装
 sudo make
 sudo make install
 修改安装完成后?件的所有者和组
 sudo chown -R mysql:mysql /usr/local/mysql
 复制配置?件模板到/etc
-sudo cp /usr/local/mysqlsupport-files/my-default.cnf /etc/my.cnf
+sudo cp /usr/local/mysql/support-files/my-default.cnf /etc/my.cnf
 修改配置?件
 sudo vim /etc/my.cnfbasedir = /usr/local/mysql/
 datadir = /usr/local/mysql/data
 socket = /tmp/mysql.sock
-将启动和cli脚本软连接到系统变量， ?便使?
+make&&make install
+再修改mysql目录权限
+cd /usr/local/mysql
+ll
+chown -R mysql:mysql /usr/local/mysql
+修改mysql配置文件
+cd mysql/support-files/
+cp  my-default.cnf /etc/my.cnf
+vim /etc/my.cnf
+basedir = /usr/local/mysql
+datadir = /usr/local/mysql/data
+socket = /tmp/mysql.sock
+初始化数据库：
+cd  bin/
+./mysqld --defaults-file=/etc/my.cnf --initialize --user=mysql  
+初始化之后会返回给你一个12位的数据库的初始密码
+启动数据库
+cd mysql/support-files/
+./mysql.server start   
+联入数据库
+./bin/mysql -uroot -p
+修改数据库密码
+./bin/mysqladmin -uroot -p password 123
+修改的时候需要输入原来的初始密码
+
+创建关于mysql的系统变量，以便使用
 sudo ln -s /usr/local/mysql/bin/mysql /usr/bin
 sudo ln -s /usr/local/mysql/bin/mysqladmin /usr/bin
 sudo ln -s /usr/local/mysql/support-files/mysql.server /usr/bin
-初始化数据库， 创建基本数据库
-sudo /usr/local/mysql/scripts/mysql_install_db --user=mysql --
-basedir=/usr/local/mysql --datadir=/usr/local/mysql/data --no-defaults
-启动服务
-sudo mysql.server start
-为root?户创建密码
-sudo /usr/local/mysql/bin/mysqladmin -u root password '123'
-查看启动进程
-sudo netstat -lntup | grep 3306
-登录MySQL服务器
-mysql -uroot -p
-?进制安装
-http://ftp.nchu.edu.tw/Unix/Database/MySQL/Downloads/MySQL-5.5/
-mysql-5.5.30-linux2.6-x86_64.tar.gz
-MySQL 的安装稍复杂?些(主要是编译后的配置及初始化),?家注意,碰到开源软件
-1:官?的安装介绍
-2: 下载源码后,?般有 README/INSTALL
-3: ./configure --help
-我们可以下载 2 进制版本来安装:
-官?示例:
-shell> groupadd mysqlshell> useradd -r -g mysql mysql
-shell> cd /usr/local
-shell> tar zxvf /path/to/mysql-VERSION-OS.tar.gz
-shell> ln -s full-path-to-mysql-VERSION-OS mysql
-shell> cd mysql
-shell> chown -R mysql .
-shell> chgrp -R mysql .
-shell> scripts/mysql_install_db --user=mysql # 安装初始化数据
-shell> chown -R root .
-shell> chown -R mysql data
-具体安装流程:
-groupadd mysql
-useradd -g mysql mysql
-cd /usr/local/mysql5.5/
-chown -R mysql .
-chgrp -R mysql .
-./scripts/mysql_install_db --user=mysql
-如果提示如下错误:
-/bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open
-shared object file: No such file or directory
-则 yum install libaioso.1 libaio
-然后再次执?
-chown -R root .
-chown -R mysql data
-mkdir /var/run/mysqld
-chown mysql /var/run/mysqld
-chgrp mysql /var/run/mysqld
-./bin/mysqld_safe --user=mysql &
-mysql 连接
-Mysqld 安装后,连接经常出现找不到 sock 的情况
-ERROR 2002 (HY000): Can't connect to local MySQL server through socket
-'/tmp/mysql.sock' (2).sock linux通过内存数据共享的?式替换?络数据通信
-我们? 2 个办法来解决
-1: 建?软件链接
-ln /var/lib/mysql/mysql.sock /tmp/mysql.sock
-2: 查看 mysql --help
-Mysql -S /path/to/mysql.sock
-mysql 修改密码
-Mysql ?户的密码,存储在?个系统库?的---mysql
-注意: mysql ?户权限检测,检测 Host,User,Password
-mysql> update user set Password=password('123456') where Host='localhost' and
-User='root';
-mysql> delete from user where Password='';
-mysql> flush privileges
