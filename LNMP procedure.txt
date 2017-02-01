@@ -1,3 +1,8 @@
+rz安装步骤
+yum install lrzsz
+
+rz从本机获取文件到虚拟机
+
 # stepstoConfigLNMPenv
 Step to Config Linux+Nginx+Mysql+PHP environment
 # 示例: yum 安装 gcc 编译环境,为编译 lnmp 做准备

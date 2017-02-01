@@ -5,8 +5,9 @@ yum -y install gcc gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel fr
 
 
 rz安装步骤
+yum install lrzsz
 
-yum install -y lrzsz
+rz从本机获取文件到虚拟机
 
 php安装
 yum install gd zlib zlib-devel openssl openssl-devel libxml2 libxml2-devel libjpeg libjpeg-devel libpng libpng-devel
